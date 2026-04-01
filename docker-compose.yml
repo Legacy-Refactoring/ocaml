@@ -13,7 +13,15 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
       - ./seeder.sql:/docker-entrypoint-initdb.d/02-seeder.sql:ro
 
-  lang:
+  ocaml:
+    image: ocaml/opam:ubuntu-24.04-ocaml-5.2
+    container_name: legacy_ocaml
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ocaml legacy.ml
+    depends_on:
+      - db
 
 volumes:
   postgres_data:
